@@ -1,0 +1,60 @@
+import React, { useState } from "react";
+import { loginUser } from "../api/services/userServices";
+
+function Login({ setLogin, setIsAuthenticated }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const userData = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await loginUser(userData);
+      console.log(response.data.message);
+      localStorage.setItem("token", response.data.token);
+      setIsAuthenticated(true);
+    } catch (error) {
+      console.error(error.response.data.message);
+    }
+  };
+
+  return (
+    <div className="w-1/3 mx-auto">
+      <h1 className="text-center">Sign In</h1>
+      <form className="flex flex-col justify-center" onSubmit={handleLogin}>
+        <input
+          className="border rounded-lg p-2 m-2"
+          type="email"
+          name="email"
+          id="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Enter email"
+        />
+        <input
+          className="border rounded-lg p-2 m-2"
+          type="password"
+          name=""
+          id="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter password"
+        />
+        <p>
+          Don't have an account?{" "}
+          <button className="text-red-500" onClick={() => setLogin(false)}>
+            Register
+          </button>
+        </p>
+        <button type="submit">Login</button>
+      </form>
+    </div>
+  );
+}
+
+export default Login;
