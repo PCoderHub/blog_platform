@@ -24,11 +24,13 @@ function Login({ setLogin, setIsAuthenticated }) {
   };
 
   return (
-    <div className="w-1/3 mx-auto bg-white p-5 rounded-lg">
-      <h1 className="text-center text-red-800 text-2xl font-bold">Sign In</h1>
+    <div className="md:bg-white md:rounded-lg md:w-1/3 md:p-5">
+      <h1 className="text-center text-red-800 text-lg md:text-2xl font-bold">
+        Sign In
+      </h1>
       <form className="flex flex-col justify-center" onSubmit={handleLogin}>
         <input
-          className="border border-[#f7c602] rounded-full p-2 m-2"
+          className="border border-[#f7c602] bg-white rounded-full p-2 m-2"
           type="email"
           name="email"
           id="email"
@@ -37,7 +39,7 @@ function Login({ setLogin, setIsAuthenticated }) {
           placeholder="Enter email"
         />
         <input
-          className="border border-[#f7c602] rounded-full p-2 m-2"
+          className="border border-[#f7c602] bg-white rounded-full p-2 m-2"
           type="password"
           name=""
           id="password"
