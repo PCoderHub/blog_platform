@@ -24,11 +24,11 @@ function Login({ setLogin, setIsAuthenticated }) {
   };
 
   return (
-    <div className="w-1/3 mx-auto">
-      <h1 className="text-center">Sign In</h1>
+    <div className="w-1/3 mx-auto bg-white p-5 rounded-lg">
+      <h1 className="text-center text-red-800 text-2xl font-bold">Sign In</h1>
       <form className="flex flex-col justify-center" onSubmit={handleLogin}>
         <input
-          className="border rounded-lg p-2 m-2"
+          className="border border-[#f7c602] rounded-full p-2 m-2"
           type="email"
           name="email"
           id="email"
@@ -37,7 +37,7 @@ function Login({ setLogin, setIsAuthenticated }) {
           placeholder="Enter email"
         />
         <input
-          className="border rounded-lg p-2 m-2"
+          className="border border-[#f7c602] rounded-full p-2 m-2"
           type="password"
           name=""
           id="password"
@@ -47,11 +47,19 @@ function Login({ setLogin, setIsAuthenticated }) {
         />
         <p>
           Don't have an account?{" "}
-          <button className="text-red-500" onClick={() => setLogin(false)}>
+          <button
+            className="text-red-500 hover:underline"
+            onClick={() => setLogin(false)}
+          >
             Register
           </button>
         </p>
-        <button type="submit">Login</button>
+        <button
+          className="bg-[#f7c602] rounded-full p-2 w-1/2 mx-auto m-1"
+          type="submit"
+        >
+          Login
+        </button>
       </form>
     </div>
   );
