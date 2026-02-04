@@ -17,6 +17,7 @@ function Login({ setLogin, setIsAuthenticated }) {
       const response = await loginUser(userData);
       console.log(response.data.message);
       localStorage.setItem("token", response.data.token);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
       setIsAuthenticated(true);
     } catch (error) {
       console.error(error.response.data.message);
