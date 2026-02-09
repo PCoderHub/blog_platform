@@ -18,21 +18,23 @@ function Home({ setIsAuthenticated }) {
   };
 
   return (
-    <div className="flex">
-      <div className="w-full md:w-1/4 flex md:flex-col justify-around md:items-center p-1 md:border md:m-2 rounded-lg">
+    <div className="flex flex-col md:flex-row">
+      <div className="w-full md:w-1/4 h-1/2 flex md:flex-col justify-around md:items-center p-1 md:border md:m-2 rounded-lg">
         <div className="text-center">
           <p className="text-red-800 font-bold">{user.name}</p>
           <p className="italic text-blue-800">{user.email}</p>
         </div>
         <button
-          className="bg-red-500 p-1 md:p-3 md:w-1/2 md:mt-2 text-white rounded-lg text-sm"
+          className="bg-red-500 m-1 p-1 md:p-3 md:w-1/2 md:mt-2 text-white rounded-lg text-sm"
           onClick={handleLogout}
         >
           Logout
         </button>
       </div>
-      {user.role === "reader" && <ReaderHome />}
-      {user.role === "author" && <AuthorHome />}
+      <div className="">
+        {user.role === "reader" && <ReaderHome />}
+        {user.role === "author" && <AuthorHome />}
+      </div>
     </div>
   );
 }
