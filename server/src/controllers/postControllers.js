@@ -10,18 +10,16 @@ const getAllPosts = asyncHandler(async (req, res) => {
 });
 
 const createPost = asyncHandler(async (req, res) => {
-  const { title, description, images } = req.body;
+  const { description } = req.body;
 
-  if (!title || !description) {
+  if (!description) {
     throw Object.assign(new Error("Posts need a title and description!"), {
       statusCode: 400,
     });
   }
 
   const post = await Post.create({
-    title,
     description,
-    images,
     user: req.user.id,
   });
 
