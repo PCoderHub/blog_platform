@@ -31,7 +31,7 @@ function Home({ setIsAuthenticated }) {
           Logout
         </button>
       </div>
-      <div className="">
+      <div className="border-t md:border-l md:border-t-0 mt-2 border-gray-300">
         {user.role === "reader" && <ReaderHome />}
         {user.role === "author" && <AuthorHome />}
       </div>

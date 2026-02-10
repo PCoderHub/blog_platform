@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
+const imageRoutes = require("./routes/imageRoutes");
 const cors = require("cors");
 
 connectDB();
@@ -14,6 +15,7 @@ app.use(cors());
 
 app.use("/api/auth", userRoutes);
 app.use("/api/posts", postRoutes);
+app.use("/api/images", imageRoutes);
 
 app.use(errorHandler);
 

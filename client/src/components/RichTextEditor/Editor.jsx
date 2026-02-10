@@ -5,16 +5,21 @@ import "./styles.css";
 
 // Editor is an uncontrolled React component
 const Editor = forwardRef(
-  ({ readOnly, defaultValue, onTextChange, onSelectionChange }, ref) => {
+  (
+    { readOnly, defaultValue, onTextChange, onSelectionChange, imageHandler },
+    ref,
+  ) => {
     const containerRef = useRef(null);
     const defaultValueRef = useRef(defaultValue);
     const onTextChangeRef = useRef(onTextChange);
     const onSelectionChangeRef = useRef(onSelectionChange);
+    const imageHandlerRef = useRef(imageHandler);
 
     useLayoutEffect(() => {
       onTextChangeRef.current = onTextChange;
       onSelectionChangeRef.current = onSelectionChange;
-    });
+      imageHandlerRef.current = imageHandler;
+    }, [onTextChange, onSelectionChange, imageHandler]);
 
     useEffect(() => {
       ref.current?.enable(!readOnly);
@@ -27,29 +32,47 @@ const Editor = forwardRef(
       );
       const quill = new Quill(editorContainer, {
         modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"], // toggled buttons
-            ["blockquote", "code-block"],
-            ["link", "image", "video", "formula"],
+          toolbar: {
+            container: [
+              ["bold", "italic", "underline", "strike"], // toggled buttons
+              ["blockquote", "code-block"],
+              ["link", "image", "video", "formula"],
 
-            [{ header: 1 }, { header: 2 }], // custom button values
-            [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
-            [{ script: "sub" }, { script: "super" }], // superscript/subscript
-            [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-            [{ direction: "rtl" }], // text direction
+              [{ header: 1 }, { header: 2 }], // custom button values
+              [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+              [{ script: "sub" }, { script: "super" }], // superscript/subscript
+              [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+              [{ direction: "rtl" }], // text direction
 
-            [{ size: ["small", false, "large", "huge"] }], // custom dropdown
-            [{ header: [1, 2, 3, 4, 5, 6, false] }],
+              [{ size: ["small", false, "large", "huge"] }], // custom dropdown
+              [{ header: [1, 2, 3, 4, 5, 6, false] }],
 
-            [{ color: [] }, { background: [] }], // dropdown with defaults from theme
-            [{ font: [] }],
-            [{ align: [] }],
+              [{ color: [] }, { background: [] }], // dropdown with defaults from theme
+              [{ font: [] }],
+              [{ align: [] }],
 
-            ["clean"], // remove formatting button
-          ],
+              ["clean"], // remove formatting button
+            ],
+            handlers: {
+              image: imageHandlerRef.current,
+            },
+          },
         },
         placeholder: "Tell us your story...",
         theme: "snow",
+      });
+
+      quill.root.addEventListener("paste", (e) => {
+        const items = e.clipboardData?.items;
+        if (!items) return;
+
+        for (const item of items) {
+          if (item.type.startsWith("image/")) {
+            e.preventDefault();
+            alert("Please use the image upload button.");
+            return;
+          }
+        }
       });
 
       ref.current = quill;
