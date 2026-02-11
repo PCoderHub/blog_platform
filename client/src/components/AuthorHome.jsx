@@ -5,6 +5,7 @@ import Quill from "quill";
 import "./Editor.css";
 import Post from "./Post";
 import { uploadImage } from "../api/services/imageServices";
+import "quill/dist/quill.snow.css";
 
 function AuthorHome() {
   const [posts, setPosts] = useState([]);
@@ -32,7 +33,7 @@ function AuthorHome() {
   const createNewPost = async () => {
     try {
       const response = await createPost({
-        description: JSON.stringify(quillRef.current.getContents().ops),
+        description: JSON.stringify(quillRef.current.getContents()),
       });
       console.log(response.data);
     } catch (error) {
@@ -100,8 +101,8 @@ function AuthorHome() {
           My Posts
         </h2>
         {posts.map((post) => {
-          let ops = JSON.parse(post.description);
-          const html = deltaToHTML(new Delta(ops));
+          let delta = JSON.parse(post.description);
+          const html = deltaToHTML(delta);
           return <Post key={post._id} html={html} />;
         })}
       </div>
